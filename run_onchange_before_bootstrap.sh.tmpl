@@ -1,0 +1,26 @@
+#!/bin/bash
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+
+set -e # Exit on error
+
+echo "🚀 Bootstrapping Environment..."
+
+# 1. Install Homebrew if missing
+if ! command -v brew &> /dev/null; then
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# 2. Install Brew Packages
+brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
+
+# 3. Switch to Homebrew Zsh
+BREW_ZSH="$(brew --prefix)/bin/zsh"
+if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
+    sudo sh -c "echo $BREW_ZSH >> /etc/shells"
+fi
+[ "$SHELL" != "$BREW_ZSH" ] && chsh -s "$BREW_ZSH"
+
+# 4. Let Mise install the rest
+echo "🛠️ Mise installing tools..."
+mise install --yes

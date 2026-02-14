@@ -1,0 +1,55 @@
+[user]
+    name = {{ promptStringOnce . "name" "Your Name" | quote }}
+    email = {{ promptStringOnce . "email" "Your Email" | quote }}
+
+[core]
+    # Use the editor you prefer
+    editor = nvim
+    # Handle line endings correctly between WSL/Windows/Mac
+    autocrlf = input
+    # Speed up git on large repos
+    fsmonitor = true
+
+[init]
+    # The modern standard
+    defaultBranch = main
+
+[pull]
+    # Prevents "divergent branch" warnings; keeps history clean
+    rebase = true
+
+[push]
+    # Automatically setup remote tracking (saves you from typing --set-upstream)
+    autoSetupRemote = true
+    # Only push the current branch
+    default = current
+
+[color]
+    ui = auto
+
+[alias]
+    # Shortcuts for common commands
+    st = status
+    co = checkout
+    br = branch
+    cm = commit
+    ps = push
+    pl = pull
+
+    # A beautiful log view
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+[diff]
+    # Use a better algorithm for diffing
+    algorithm = histogram
+    # Detect renames
+    renames = true
+
+[help]
+    # Correct typos automatically (e.g., 'git comit' -> 'git commit')
+    autocorrect = 1
+
+[merge]
+    # Show conflict markers more clearly
+    conflictstyle = zdiff3
+

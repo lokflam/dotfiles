@@ -1,0 +1,28 @@
+# 1. Homebrew & Mise Paths
+if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+eval "$(mise activate zsh)"
+
+# 2. WezTerm Shell Integration (OSC 7 for working directory support)
+if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
+  # Tell WezTerm the current directory so new panes open in the same spot
+  printf "\e]7;file://%s%s\e\\" "$HOST" "$PWD"
+fi
+
+# 3. Tool Initializations
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+source <(fzf --zsh)
+
+# 4. Plugins (Sourced from Homebrew paths)
+# Note: Syntax highlighting must be the LAST plugin sourced
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+# 5. Aliases
+# alias ls="eza --icons"
+# alias cat="bat"
+# alias v="nvim"
+# alias g="lazygit"
+
