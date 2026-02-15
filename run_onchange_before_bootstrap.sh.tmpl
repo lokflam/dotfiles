@@ -1,26 +1,38 @@
 #!/bin/bash
 # Brewfile hash: {{ include "Brewfile" | sha256sum }}
 
-set -e # Exit on error
+set -e 
 
-echo "🚀 Bootstrapping Environment..."
+echo "🚀 Starting System Bootstrap..."
 
-# 1. Install Homebrew if missing
+# 1. Install System Dependencies (The fix for your GCC error)
+# Homebrew on Linux REQUIRES these to link binaries correctly.
+echo "📦 Installing system build tools via apt..."
+sudo apt update
+sudo apt install -y build-essential
+
+# 2. Install Homebrew if missing
 if ! command -v brew &> /dev/null; then
+    echo "🍺 Installing Homebrew..."
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-# 2. Install Brew Packages
+# Ensure Brew is in the current script path
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# 3. Install Brew Packages
+echo "📦 Installing Homebrew packages..."
 brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
 
-# 3. Switch to Homebrew Zsh
+# 4. Switch Shell
 BREW_ZSH="$(brew --prefix)/bin/zsh"
 if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
     sudo sh -c "echo $BREW_ZSH >> /etc/shells"
 fi
 [ "$SHELL" != "$BREW_ZSH" ] && chsh -s "$BREW_ZSH"
 
-# 4. Let Mise install the rest
-echo "🛠️ Mise installing tools..."
-mise install --yes
+# 5. Mise Install
+# Using brew path to call mise to ensure it's the one we just installed
+echo "🛠️ Installing Mise tools..."
+$(brew --prefix)/bin/mise install --yes
+

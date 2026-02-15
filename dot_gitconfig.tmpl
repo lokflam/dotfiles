@@ -1,6 +1,6 @@
 [user]
-    name = {{ promptStringOnce . "name" "Your Name" | quote }}
-    email = {{ promptStringOnce . "email" "Your Email" | quote }}
+    name = {{ .name }}
+    email = {{ .email }}
 
 [core]
     # Use the editor you prefer

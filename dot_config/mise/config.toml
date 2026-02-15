@@ -4,13 +4,13 @@ neovim = "latest"
 fzf = "latest"
 zoxide = "latest"
 eza = "latest"
-gh = "latest"
 zellij = "latest"
 fd = "latest"
 ripgrep = "latest"
 bat = "latest"
 lazygit = "latest"
 starship = "latest"
+gemini-cli = "latest"
 
 [settings]
 activate_aggressive = true
