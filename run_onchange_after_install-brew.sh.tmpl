@@ -19,8 +19,10 @@ if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
 fi
 [ "$SHELL" != "$BREW_ZSH" ] && chsh -s "$BREW_ZSH"
 
-# 3. Mise Install
+# 3. Export the token so this session of mise install can see it
+export GITHUB_TOKEN={{ .github_token | quote }}
+
+# 4. Mise Install
 # Using brew path to call mise to ensure it's the one we just installed
 echo "🛠️ Installing Mise tools..."
-$(brew --prefix)/bin/mise settings set github_token {{ .github_token | quote }}
 $(brew --prefix)/bin/mise install

@@ -27,4 +27,3 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # alias cat="bat"
 # alias v="nvim"
 # alias g="lazygit"
-
