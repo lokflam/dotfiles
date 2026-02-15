@@ -12,12 +12,15 @@ echo "📦 Installing Homebrew packages..."
 brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
 
 # 2. Switch Shell
-echo "📦 Switching shell to zsh..."
 BREW_ZSH="$(brew --prefix)/bin/zsh"
 if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
+    echo "📦 Registering zsh to shells..."
     sudo sh -c "echo $BREW_ZSH >> /etc/shells"
 fi
-[ "$SHELL" != "$BREW_ZSH" ] && chsh -s "$BREW_ZSH"
+if "$SHELL" != "$BREW_ZSH"; then
+    echo "📦 Switching shell to zsh..."
+    chsh -s "$BREW_ZSH"
+fi
 
 # 3. Export the token so this session of mise install can see it
 export GITHUB_TOKEN={{ .github_token | quote }}
