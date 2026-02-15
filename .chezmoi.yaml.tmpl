@@ -1,7 +1,8 @@
 {{- $name := promptStringOnce . "name" "Name for Git" -}}
 {{- $email := promptStringOnce . "email" "Email for Git" -}}
+{{- $github_token := promptStringOnce . "github_token" "GitHub Personal Access Token (for rate limits)" -}}
 
 data:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
-
+    github_token: {{ $github_token | quote }}
