@@ -1,5 +1,4 @@
 #!/bin/bash
-# Brewfile hash: {{ include "Brewfile" | sha256sum }}
 
 set -e 
 
@@ -16,23 +15,3 @@ if ! command -v brew &> /dev/null; then
     echo "🍺 Installing Homebrew..."
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-
-# Ensure Brew is in the current script path
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# 3. Install Brew Packages
-echo "📦 Installing Homebrew packages..."
-brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
-
-# 4. Switch Shell
-echo "📦 Switching shell to zsh..."
-BREW_ZSH="$(brew --prefix)/bin/zsh"
-if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
-    sudo sh -c "echo $BREW_ZSH >> /etc/shells"
-fi
-[ "$SHELL" != "$BREW_ZSH" ] && chsh -s "$BREW_ZSH"
-
-# 5. Mise Install
-# Using brew path to call mise to ensure it's the one we just installed
-echo "🛠️ Installing Mise tools..."
-$(brew --prefix)/bin/mise install
