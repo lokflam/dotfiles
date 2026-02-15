@@ -25,6 +25,7 @@ echo "📦 Installing Homebrew packages..."
 brew bundle --file={{ joinPath .chezmoi.sourceDir "Brewfile" | quote }}
 
 # 4. Switch Shell
+echo "📦 Switching shell to zsh..."
 BREW_ZSH="$(brew --prefix)/bin/zsh"
 if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
     sudo sh -c "echo $BREW_ZSH >> /etc/shells"
@@ -34,5 +35,4 @@ fi
 # 5. Mise Install
 # Using brew path to call mise to ensure it's the one we just installed
 echo "🛠️ Installing Mise tools..."
-$(brew --prefix)/bin/mise install --yes
-
+$(brew --prefix)/bin/mise install
