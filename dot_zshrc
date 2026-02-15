@@ -1,7 +1,14 @@
-# 1. Homebrew & Mise Paths
+# Homebrew
 if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+# Give Mise access to GitHub to avoid rate limits
+if command -v gh &> /dev/null; then
+  export GITHUB_TOKEN=$(gh auth token 2>/dev/null)
+fi
+
+# Mise
 eval "$(mise activate zsh)"
 
 # 2. WezTerm Shell Integration (OSC 7 for working directory support)
