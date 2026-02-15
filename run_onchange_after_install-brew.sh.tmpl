@@ -17,7 +17,7 @@ if ! grep -Fxq "$BREW_ZSH" /etc/shells; then
     echo "📦 Registering zsh to shells..."
     sudo sh -c "echo $BREW_ZSH >> /etc/shells"
 fi
-if "$SHELL" != "$BREW_ZSH"; then
+if [ "$SHELL" != "$BREW_ZSH" ]; then
     echo "📦 Switching shell to zsh..."
     chsh -s "$BREW_ZSH"
 fi
