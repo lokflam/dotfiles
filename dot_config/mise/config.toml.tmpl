@@ -4,7 +4,7 @@ activate_aggressive = true
 [env]
 # Mise uses this variable for its own GitHub API calls (to avoid rate limits)
 # and also makes it available in the terminal.
-GITHUB_TOKEN = {{ .github_token | quote }}
+MISE_GITHUB_TOKEN = {{ .github_token | quote }}
 
 [tools]
 node = "lts"
