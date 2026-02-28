@@ -1,0 +1,23 @@
+{
+  "experimental": {
+    "plan": true
+  },
+  "general": {
+    "preferredEditor": "neovim",
+    "previewFeatures": true,
+    "vimMode": true,
+    "enablePromptCompletion": true
+  },
+  "security": {
+    "auth": {
+      "selectedType": "vertex-ai"
+    }
+  },
+  "ui": {
+    "theme": "GitHub",
+    "hideBanner": true
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  }
+}

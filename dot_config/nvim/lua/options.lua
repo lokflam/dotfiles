@@ -15,7 +15,7 @@ vim.opt.signcolumn = "yes"
 -- Enable mouse mode, can be useful for resizing splits for example
 vim.opt.mouse = "a"
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard:append({ "unnamedplus" })
 
 -- Save undo history
 vim.opt.undofile = true
@@ -69,3 +69,35 @@ vim.filetype.add({
 		tf = "terraform",
 	},
 })
+
+-- custom diagnostic symbols
+local severity = vim.diagnostic.severity
+vim.diagnostic.config({
+	signs = {
+		text = {
+			[severity.ERROR] = " ",
+			[severity.WARN] = " ",
+			[severity.HINT] = "󰠠 ",
+			[severity.INFO] = " ",
+		},
+	},
+})
+
+-- local function paste()
+--   return {
+--     vim.fn.split(vim.fn.getreg(""), "\n"),
+--     vim.fn.getregtype(""),
+--   }
+-- end
+--
+-- vim.g.clipboard = {
+-- 	name = "OSC 52",
+-- 	copy = {
+-- 		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+-- 		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+-- 	},
+-- 	paste = {
+-- 		["+"] = paste,
+-- 		["*"] = paste,
+-- 	},
+-- }
